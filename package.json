@@ -1,0 +1,44 @@
+{
+    "name": "jmoviebox",
+    "version": "0.0.0",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev:vue": "vite",
+        "dev:all":"concurrently \"npm run dev:vue\" \"npm run dev:node\" \"npm run dev:run\"",
+        "dev:node": "vite build -w -c vite.config.node.ts --mode development --outDir ./dev_node",
+        "dev:run": "node --watch ./dev_node/server.js",
+        "dev:server": "ts-node --project tsconfig.server.json  ./server.ts",
+        "build:all": "vite build -c vite.config.node.ts --outDir build_node && vite build -c vite.config.vue.ts --outDir build_vue",
+        "preview": "vite preview",
+        "build-only": "vite build",
+        "type-check": "vue-tsc --build"
+    },
+    "dependencies": {
+        "cors": "^2.8.5",
+        "express": "^4.21.2",
+        "http-proxy-middleware": "^3.0.3",
+        "mime": "^4.0.6",
+        "pinia": "^2.3.1",
+        "vue": "^3.5.13",
+        "vue-router": "^4.5.0"
+    },
+    "devDependencies": {
+        "@tsconfig/node22": "^22.0.0",
+        "@types/cors": "^2.8.17",
+        "@types/express": "^5.0.0",
+        "@types/node": "^22.13.1",
+        "@vitejs/plugin-vue": "^5.2.1",
+        "@vitejs/plugin-vue-jsx": "^4.1.1",
+        "@vue/tsconfig": "^0.7.0",
+        "concurrently": "^9.1.2",
+        "cross-env": "^7.0.3",
+        "naive-ui": "^2.41.0",
+        "npm-run-all2": "^7.0.2",
+        "typescript": "~5.7.3",
+        "vite": "^6.0.11",
+        "vite-plugin-node": "^4.0.0",
+        "vite-plugin-vue-devtools": "^7.7.1",
+        "vue-tsc": "^2.2.0"
+    }
+}
