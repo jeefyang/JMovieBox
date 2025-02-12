@@ -1,6 +1,12 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from "vue-router";
 import HelloWorld from "./components/HelloWorld.vue";
+import { onMounted, ref } from "vue";
+
+const testData = ref("");
+onMounted(async () => {
+    testData.value = await fetch("/test").then((r) => r.text());
+});
 </script>
 
 <template>
@@ -8,7 +14,7 @@ import HelloWorld from "./components/HelloWorld.vue";
         <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
 
         <div class="wrapper">
-            <HelloWorld msg="You1 did it!" />
+            <HelloWorld :msg="testData" />
 
             <nav>
                 <RouterLink to="/">Home</RouterLink>
