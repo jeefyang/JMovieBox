@@ -14,6 +14,7 @@
         "type-check": "vue-tsc --build"
     },
     "dependencies": {
+        "@icon-park/vue-next": "^1.4.2",
         "cors": "^2.8.5",
         "express": "^4.21.2",
         "http-proxy-middleware": "^3.0.3",
@@ -34,7 +35,9 @@
         "cross-env": "^7.0.3",
         "naive-ui": "^2.41.0",
         "npm-run-all2": "^7.0.2",
+        "sass": "^1.84.0",
         "typescript": "~5.7.3",
+        "vfonts": "^0.0.3",
         "vite": "^6.0.11",
         "vite-plugin-node": "^4.0.0",
         "vite-plugin-vue-devtools": "^7.7.1",
