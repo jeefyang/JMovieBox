@@ -1,6 +1,8 @@
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import { VitePluginNode } from "vite-plugin-node";
+import { fileURLToPath, URL } from 'node:url'
+
 
 import fs from "fs";
 
@@ -12,7 +14,12 @@ export default defineConfig({
         ...VitePluginNode({
             adapter: "express",
             appPath: "./src/server/server.ts",
-            outputFormat:"es"
+            outputFormat: "es"
         })
-    ]
+    ],
+    resolve: {
+        alias: {
+            '@': fileURLToPath(new URL('./src', import.meta.url))
+        },
+    },
 });

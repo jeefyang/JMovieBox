@@ -4,10 +4,12 @@ import HelloWorld from "./components/HelloWorld.vue";
 import { onMounted, ref } from "vue";
 import { NFlex, NConfigProvider, darkTheme } from "naive-ui";
 import { BrowserChrome, History, Config } from "@icon-park/vue-next";
+import { Apis } from "@/apis/Apis";
 
 const testData = ref("");
 onMounted(async () => {
-    testData.value = await fetch("/test").then((r) => r.text());
+    const { text } = await Apis.test.fetch({ a: "hello", b: "world123" });
+    testData.value = text;
 });
 </script>
 
@@ -55,7 +57,7 @@ onMounted(async () => {
     }
     .bottom {
         margin-bottom: env(safe-area-inset-bottom);
-        display: flex; 
+        display: flex;
         justify-content: space-around;
 
         .router {

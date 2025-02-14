@@ -1,24 +1,12 @@
-type JResquestPost<R = string> = {
-    type: "POST",
-    body: Object,
-    reutrnData: R,
-    url: string
-}
+import { shuntFn } from "./ApisUtil";
 
-type JResquestGet<R = string> = {
-    type: "GET",
-    body: Record<string, string>,
-    reutrnData: R,
-    url: string
-}
-
-type JResquest<R = string> = JResquestPost<R> | JResquestGet<R>
-
-export const Jfetch = async <R = string>(res: JResquest<R>) => {
-    if (res.type == "GET") {
-        const queryString = new URLSearchParams({
-            ...res.body
-        }).toString()
-    }
+export const Apis = {
+    /** 测试数据 */
+    test: shuntFn<{
+        /** 前置数据 */
+        a: string,
+        /** 后置数据 */
+        b: string
+    }, { status: number, text: string }>("POST", '/test')
 }
 
