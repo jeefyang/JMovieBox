@@ -40,3 +40,5 @@ config.jsonc
 ssl
 
 test*
+
+*.db

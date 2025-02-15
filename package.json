@@ -4,17 +4,20 @@
     "private": true,
     "type": "module",
     "scripts": {
+        "reset:prisma": "prisma generate",
         "dev:vue": "vite",
         "dev:node": "vite build -w -c vite.config.node.ts --mode development --outDir ./dev_node",
         "dev:run": "node --watch ./dev_node/server.js",
         "dev:all": "concurrently \"npm run dev:vue\" \"npm run dev:node\" \"npm run dev:run\"",
-        "build:all": "vite build -c vite.config.node.ts --outDir build_node && vite build -c vite.config.vue.ts --outDir build_vue",
+        "build:all": "prisma generate  && prisma db push  && vite build -c vite.config.node.ts --outDir build_node && vite build -c vite.config.ts --outDir build_vue",
         "preview": "vite preview",
         "build-only": "vite build",
         "type-check": "vue-tsc --build"
     },
     "dependencies": {
         "@icon-park/vue-next": "^1.4.2",
+        "@prisma/client": "^6.3.1",
+        "better-sqlite3": "^11.8.1",
         "body-parser": "^1.20.3",
         "cors": "^2.8.5",
         "express": "^4.21.2",
@@ -27,6 +30,7 @@
     },
     "devDependencies": {
         "@tsconfig/node22": "^22.0.0",
+        "@types/better-sqlite3": "^7.6.12",
         "@types/body-parser": "^1.19.5",
         "@types/cors": "^2.8.17",
         "@types/express": "^5.0.0",
@@ -38,6 +42,7 @@
         "cross-env": "^7.0.3",
         "naive-ui": "^2.41.0",
         "npm-run-all2": "^7.0.2",
+        "prisma": "^6.3.1",
         "sass": "^1.84.0",
         "typescript": "~5.7.3",
         "vfonts": "^0.0.3",

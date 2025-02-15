@@ -15,19 +15,22 @@ export const shuntFn = <B, R>(type: "POST" | 'GET', url: string) => {
                         .catch(error => reject(error))
                 }
                 else if (type == "POST") {
-                    const res = await fetch(url, {
+                    fetch(url, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify(data)
                     })
-                    if (!res.ok) {
-                        reject(`HTTP error! status: ${res.status}`)
-                        return
-                    }
-                    const j = await res.json()
-                    resolve(j)
+                        .then(response => {
+                            if (!response.ok) {
+                                reject(`HTTP error! status: ${response.status}`)
+                                return
+                            }
+                            return response.json()
+                        })
+                        .then(data => resolve(data))
+                        .catch(error => reject(error))
                 }
             })
         },
@@ -37,7 +40,7 @@ export const shuntFn = <B, R>(type: "POST" | 'GET', url: string) => {
                 res: Parameters<Parameters<Express['get' | 'post']>[1]>[1],
                 data: B
             ) => Promise<R | null | void> | (R | null | void),
-            returnCB?: (req: Parameters<Parameters<Express['get' | 'post']>[1]>[0],
+            sendCB?: (req: Parameters<Parameters<Express['get' | 'post']>[1]>[0],
                 res: Parameters<Parameters<Express['get' | 'post']>[1]>[1],
                 data: R | null | void) => Promise<void> | void
         ) => {
@@ -46,7 +49,12 @@ export const shuntFn = <B, R>(type: "POST" | 'GET', url: string) => {
                 app.get(url, async (req, res, next) => {
                     try {
                         const data = await cb(req, res, <any>req.query)
-                        returnCB && await returnCB(req, res, data)
+                        if (sendCB) {
+                            await sendCB(req, res, data)
+                        }
+                        else {
+                            data && res.send(data)
+                        }
                         next()
                     }
                     catch (err) {
@@ -59,7 +67,12 @@ export const shuntFn = <B, R>(type: "POST" | 'GET', url: string) => {
                 app.post(url, async (req, res, next) => {
                     try {
                         const data = await cb(req, res, req.body)
-                        returnCB && await returnCB(req, res, data)
+                        if (sendCB) {
+                            await sendCB(req, res, data)
+                        }
+                        else {
+                            data && res.send(data)
+                        }
                         next()
                     }
                     catch (err) {

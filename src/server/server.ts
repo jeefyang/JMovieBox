@@ -4,11 +4,12 @@ import fs, { stat } from "fs";
 import path from "path";
 import { createProxyMiddleware } from "http-proxy-middleware";
 import { Apis } from "@/apis/Apis";
-import * as bodyParser from "body-parser"
+import { default as bodyParser } from "body-parser"
+import { default as Database } from "better-sqlite3"
 
 const app = express();
 app.use(cors());
-app.use(bodyParser.default.json())
+app.use(bodyParser.json())
 let jsonUrl = "./config.jsonc";
 let exampleJsonUrl = "./config.example.jsonc";
 // 没有就创建
@@ -20,6 +21,8 @@ if (!fs.existsSync(jsonUrl)) {
 const jsonStr = fs.readFileSync(jsonUrl, "utf-8");
 const configjson: JConfigType = eval(`(${jsonStr})`);
 console.log(configjson);
+
+const db = Database(configjson.sqlPath, { verbose: console.log })
 
 // 列表
 app.post("/fileList", (req, res) => {

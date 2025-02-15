@@ -1,6 +1,6 @@
 # JMovieBox
 
-This template should help get you started developing with Vue 3 in Vite.
+这是一个在线影视刮削工具.
 
 ## Recommended IDE Setup
 
