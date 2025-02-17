@@ -10,9 +10,11 @@ export const historyListModel = {
     /** 上次观赏时间 */
     lastViewTime: keyEnum.INTEGER,
     /** 首次观赏时间 */
-    firstViewTime:keyEnum.INTEGER,
+    firstViewTime: keyEnum.INTEGER,
     /** 标签 */
     tagList: keyEnum.TEXT,
+    /** 我的标签 */
+    myTagList: keyEnum.TEXT,
     /** 分数 */
     score: keyEnum.REAL,
     /** 自我分数 */
