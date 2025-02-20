@@ -5,7 +5,7 @@ import path from "path";
 import { createProxyMiddleware } from "http-proxy-middleware";
 import { Apis } from "@/apis/Apis";
 import { default as bodyParser } from "body-parser"
-import { default as Database } from "better-sqlite3"
+import {Sequelize} from "sequelize"
 
 const app = express();
 app.use(cors());
@@ -22,7 +22,10 @@ const jsonStr = fs.readFileSync(jsonUrl, "utf-8");
 const configjson: JConfigType = eval(`(${jsonStr})`);
 console.log(configjson);
 
-const db = Database(configjson.sqlPath, { verbose: console.log })
+const db = new Sequelize({
+    dialect: 'sqlite',
+    storage: configjson.sqlPath
+  });
 
 // 列表
 app.post("/fileList", (req, res) => {
